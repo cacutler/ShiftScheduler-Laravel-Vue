@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Form, Head } from '@inertiajs/vue3';
+import { useForm, Head } from '@inertiajs/vue3';
 import InputError from '@/components/InputError.vue';
 import PasswordInput from '@/components/PasswordInput.vue';
 import TextLink from '@/components/TextLink.vue';
@@ -16,17 +16,27 @@ defineOptions({
         description: 'Enter your details below to create your account',
     },
 });
+
+const form = useForm({
+    name: '',
+    username: '',
+    email: '',
+    phone_number: '',
+    password: '',
+    password_confirmation: '',
+});
+
+function submit() {
+    form.submit(store().method, store().url, {
+        onSuccess: () => form.reset('password', 'password_confirmation')
+    });
+}
 </script>
 
 <template>
     <Head title="Register" />
 
-    <Form
-        v-bind="store.form()"
-        :reset-on-success="['password', 'password_confirmation']"
-        v-slot="{ errors, processing }"
-        class="flex flex-col gap-6"
-    >
+    <form @submit.prevent="submit" class="flex flex-col gap-6">
         <div class="grid gap-6">
             <div class="grid gap-2">
                 <Label for="name">Name</Label>
@@ -37,10 +47,24 @@ defineOptions({
                     autofocus
                     :tabindex="1"
                     autocomplete="name"
-                    name="name"
+                    v-model="form.name"
                     placeholder="Full name"
                 />
-                <InputError :message="errors.name" />
+                <InputError :message="form.errors.name" />
+            </div>
+
+            <div class="grid gap-2">
+                <Label for="username">Username</Label>
+                <Input
+                    id="username"
+                    type="text"
+                    required
+                    :tabindex="2"
+                    autocomplete="username"
+                    v-model="form.username"
+                    placeholder="username"
+                />
+                <InputError :message="form.errors.username" />
             </div>
 
             <div class="grid gap-2">
@@ -49,12 +73,18 @@ defineOptions({
                     id="email"
                     type="email"
                     required
-                    :tabindex="2"
+                    :tabindex="3"
                     autocomplete="email"
-                    name="email"
+                    v-model="form.email"
                     placeholder="email@example.com"
                 />
-                <InputError :message="errors.email" />
+                <InputError :message="form.errors.email" />
+            </div>
+
+            <div class="grid gap-2">
+                <Label for="phone_number">Phone Number</Label>
+                <Input id="phone_number" type="tel" :tabindex="4" autocomplete="tel" v-model="form.phone_number" placeholder="+1 (555) 000-0000"/>
+                <InputError :message="form.errors.phone_number"/>
             </div>
 
             <div class="grid gap-2">
@@ -62,12 +92,12 @@ defineOptions({
                 <PasswordInput
                     id="password"
                     required
-                    :tabindex="3"
+                    :tabindex="5"
                     autocomplete="new-password"
-                    name="password"
+                    v-model="form.password"
                     placeholder="Password"
                 />
-                <InputError :message="errors.password" />
+                <InputError :message="form.errors.password" />
             </div>
 
             <div class="grid gap-2">
@@ -75,22 +105,22 @@ defineOptions({
                 <PasswordInput
                     id="password_confirmation"
                     required
-                    :tabindex="4"
+                    :tabindex="6"
                     autocomplete="new-password"
-                    name="password_confirmation"
+                    v-model="form.password_confirmation"
                     placeholder="Confirm password"
                 />
-                <InputError :message="errors.password_confirmation" />
+                <InputError :message="form.errors.password_confirmation" />
             </div>
 
             <Button
                 type="submit"
                 class="mt-2 w-full"
-                tabindex="5"
-                :disabled="processing"
+                tabindex="7"
+                :disabled="form.processing"
                 data-test="register-user-button"
             >
-                <Spinner v-if="processing" />
+                <Spinner v-if="form.processing" />
                 Create account
             </Button>
         </div>
@@ -100,9 +130,9 @@ defineOptions({
             <TextLink
                 :href="login()"
                 class="underline underline-offset-4"
-                :tabindex="6"
+                :tabindex="8"
                 >Log in</TextLink
             >
         </div>
-    </Form>
+    </form>
 </template>
