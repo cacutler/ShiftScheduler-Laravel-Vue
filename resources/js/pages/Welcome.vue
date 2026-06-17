@@ -5,34 +5,23 @@ const props = defineProps<{canRegister: boolean}>()
 </script>
 <template>
   <div class="page">
-    <!-- Nav -->
-    <nav class="nav">
+    <nav class="nav"><!-- Nav -->
       <span class="nav-logo">ShiftSync</span>
       <div class="nav-links">
         <Link :href="route('login')" class="btn-ghost">Sign in</Link>
         <Link v-if="canRegister" :href="route('register')" class="btn-primary">Get started</Link>
       </div>
     </nav>
-    <!-- Hero -->
-    <header class="hero">
+    <header class="hero"><!-- Hero -->
       <div class="hero-eyebrow">Workforce scheduling, simplified</div>
-      <h1 class="hero-heading">
-        Every shift,<br>
-        <span class="hero-heading-accent">in its place.</span>
-      </h1>
-      <p class="hero-sub">
-        Managers create and assign shifts. Employees claim open ones.
-        No spreadsheets, no group chats, no confusion.
-      </p>
+      <h1 class="hero-heading">Every shift,<br><span class="hero-heading-accent">in its place.</span></h1>
+      <p class="hero-sub">Managers create and assign shifts. Employees claim open ones. No spreadsheets, no group chats, no confusion.</p>
       <div class="hero-actions">
-        <Link v-if="canRegister" :href="route('register')" class="btn-primary btn-large">
-          Create an account
-        </Link>
+        <Link v-if="canRegister" :href="route('register')" class="btn-primary btn-large">Create an account</Link>
         <Link :href="route('login')" class="btn-outline btn-large">Sign in</Link>
       </div>
     </header>
-    <!-- Features -->
-    <section class="features">
+    <section class="features"><!-- Features -->
       <div class="feature-card">
         <div class="feature-icon">&#9632;</div>
         <h3>Build the schedule</h3>
@@ -49,15 +38,13 @@ const props = defineProps<{canRegister: boolean}>()
         <p>Keep a full roster of employees, view who's working when, and control account access — all in one place.</p>
       </div>
     </section>
-    <!-- Footer -->
-    <footer class="footer">
-      <span>© {{ new Date().getFullYear() }} ShiftSync</span>
+    <footer class="footer"><!-- Footer -->
+      <span>© {{new Date().getFullYear()}} ShiftSync</span>
     </footer>
   </div>
 </template>
 <style scoped>
-/* ── Tokens ── */
-:root {
+:root {/* ── Tokens ── */
   --ink:       #1a1a18;
   --ink-muted: #6b6b65;
   --surface:   #f5f4ef;
@@ -68,8 +55,11 @@ const props = defineProps<{canRegister: boolean}>()
   --font-display: 'Georgia', 'Times New Roman', serif;
   --font-body:    'Helvetica Neue', Arial, sans-serif;
 }
-/* ── Reset & base ── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after {/* ── Reset & base ── */
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 .page {
   min-height: 100vh;
   background: var(--surface);
@@ -78,8 +68,7 @@ const props = defineProps<{canRegister: boolean}>()
   display: flex;
   flex-direction: column;
 }
-/* ── Nav ── */
-.nav {
+.nav {/* ── Nav ── */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -101,8 +90,7 @@ const props = defineProps<{canRegister: boolean}>()
   align-items: center;
   gap: 0.75rem;
 }
-/* ── Hero ── */
-.hero {
+.hero {/* ── Hero ── */
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -147,8 +135,7 @@ const props = defineProps<{canRegister: boolean}>()
   flex-wrap: wrap;
   justify-content: center;
 }
-/* ── Features ── */
-.features {
+.features {/* ── Features ── */
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1px;
@@ -179,16 +166,14 @@ const props = defineProps<{canRegister: boolean}>()
   line-height: 1.65;
   color: var(--ink-muted);
 }
-/* ── Footer ── */
-.footer {
+.footer {/* ── Footer ── */
   text-align: center;
   padding: 1.5rem;
   font-size: 0.8125rem;
   color: var(--ink-muted);
   border-top: 1px solid var(--border);
 }
-/* ── Buttons ── */
-.btn-primary {
+.btn-primary {/* ── Buttons ── */
   display: inline-flex;
   align-items: center;
   padding: 0.6rem 1.25rem;
@@ -239,8 +224,7 @@ const props = defineProps<{canRegister: boolean}>()
   padding: 0.75rem 1.75rem;
   font-size: 1rem;
 }
-/* ── Responsive ── */
-@media (max-width: 640px) {
+@media (max-width: 640px) {/* ── Responsive ── */
   .nav {
     padding: 1rem 1.25rem;
   }
