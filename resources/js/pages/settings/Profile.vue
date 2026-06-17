@@ -20,10 +20,10 @@ defineOptions({
         breadcrumbs: [
             {
                 title: 'Profile settings',
-                href: edit()
-            }
-        ]
-    }
+                href: edit().url,
+            },
+        ],
+    },
 });
 const page = usePage();
 const user = computed(() => page.props.auth.user);

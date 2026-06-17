@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ShiftStoreRequest;
 use App\Http\Requests\ShiftUpdateRequest;
 use App\Models\Shift;
+use App\Models\User;
 use App\UserStatus;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -36,7 +37,8 @@ class ShiftController extends Controller {
      */
     public function create(Request $request): Response {
         $this->authorize('create', Shift::class);
-        return Inertia::render('Shifts/Create');
+        $users = User::orderBy('name')->get();
+        return Inertia::render('Shifts/Create', ['users' => $users]);
     }
     /**
      * Store a newly created shift (managers only).
@@ -55,7 +57,8 @@ class ShiftController extends Controller {
      */
     public function edit(Request $request, Shift $shift): Response {
         $this->authorize('update', $shift);
-        return Inertia::render('Shifts/Edit', ['shift' => $shift->load('user')]);
+        $users = User::orderBy('name')->get();
+        return Inertia::render('Shifts/Edit', ['shift' => $shift->load('user'), 'users' => $users]);
     }
     /**
      * Update a shift.
