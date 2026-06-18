@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Head, Link, usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
+import AppSidebarLayout from '@/layouts/app/AppSidebarLayout.vue';
 import Heading from '@/components/Heading.vue';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -12,19 +13,15 @@ type Props = {
     shift: Shift & { user?: User };
 };
 
-defineOptions({
-    layout: {
-        breadcrumbs: [
-            {
-                title: 'Shifts',
-                href: index().url,
-            },
-            {
-                title: 'Shift details',
-            },
-        ],
+const breadcrumbs = [
+    {
+        title: 'Shifts',
+        href: index().url,
     },
-});
+    {
+        title: 'Shift details',
+    },
+];
 
 const props = defineProps<Props>();
 const page = usePage();
@@ -58,10 +55,11 @@ const dateRange = () => {
 </script>
 
 <template>
-    <Head title="Shift details" />
-    <h1 class="sr-only">Shift details</h1>
+    <AppSidebarLayout :breadcrumbs="breadcrumbs">
+        <Head title="Shift details" />
+        <h1 class="sr-only">Shift details</h1>
 
-    <div class="space-y-6">
+        <div class="space-y-6">
         <div class="flex items-start justify-between">
             <Heading
                 variant="small"
@@ -126,5 +124,6 @@ const dateRange = () => {
             </Button>
             <DeleteShift v-if="isManager" :shift="shift" />
         </div>
-    </div>
+        </div>
+    </AppSidebarLayout>
 </template>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
+import AppLayout from '@/layouts/AppLayout.vue';
 import Heading from '@/components/Heading.vue';
 import { Button } from '@/components/ui/button';
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table';
@@ -10,16 +11,12 @@ type Props = {
     users: User[];
 };
 defineProps<Props>();
-defineOptions({
-    layout: {
-        breadcrumbs: [
-            {
-                title: 'Users',
-                href: index().url,
-            },
-        ],
+const breadcrumbs = [
+    {
+        text: 'Users',
+        href: index().url,
     },
-});
+];
 
 const statusColor = (status: string) => {
     return status === 'manager' ? 'default' : 'secondary';
@@ -36,10 +33,11 @@ const formatDate = (date: string | null) => {
 </script>
 
 <template>
-    <Head title="Users" />
-    <h1 class="sr-only">Users</h1>
+    <AppLayout :breadcrumbs="breadcrumbs">
+        <Head title="Users" />
+        <h1 class="sr-only">Users</h1>
 
-    <div class="space-y-6">
+        <div class="space-y-6">
         <div class="flex items-center justify-between">
             <Heading
                 variant="small"
@@ -103,5 +101,6 @@ const formatDate = (date: string | null) => {
                 Create the first user
             </Button>
         </div>
-    </div>
+        </div>
+    </AppLayout>
 </template>

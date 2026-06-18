@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Head, Link, usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
+import AppSidebarLayout from '@/layouts/app/AppSidebarLayout.vue';
 import Heading from '@/components/Heading.vue';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -20,19 +21,15 @@ type Props = {
     profile: User & { shifts?: Shift[] };
 };
 
-defineOptions({
-    layout: {
-        breadcrumbs: [
-            {
-                title: 'Users',
-                href: index().url,
-            },
-            {
-                title: 'User profile',
-            },
-        ],
+const breadcrumbs = [
+    {
+        title: 'Users',
+        href: index().url,
     },
-});
+    {
+        title: 'User profile',
+    },
+];
 
 const props = defineProps<Props>();
 const page = usePage();
@@ -68,10 +65,11 @@ const formatDateTime = (dateTime: string) => {
 </script>
 
 <template>
-    <Head :title="`${profile.name} profile`" />
-    <h1 class="sr-only">{{ profile.name }} profile</h1>
+    <AppSidebarLayout :breadcrumbs="breadcrumbs">
+        <Head :title="`${profile.name} profile`" />
+        <h1 class="sr-only">{{ profile.name }} profile</h1>
 
-    <div class="space-y-6">
+        <div class="space-y-6">
         <div class="flex items-start justify-between">
             <Heading
                 variant="small"
@@ -162,5 +160,6 @@ const formatDateTime = (dateTime: string) => {
             </Button>
             <DeleteUserComponent v-if="canDelete" :user="profile" />
         </div>
-    </div>
+        </div>
+    </AppSidebarLayout>
 </template>

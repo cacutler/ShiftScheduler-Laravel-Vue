@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Head, Link, usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
+import AppLayout from '@/layouts/AppLayout.vue';
 import Heading from '@/components/Heading.vue';
 import { Button } from '@/components/ui/button';
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table';
@@ -11,16 +12,12 @@ type Props = {
     shifts: (Shift & { user?: User })[];
 };
 defineProps<Props>();
-defineOptions({
-    layout: {
-        breadcrumbs: [
-            {
-                title: 'Shifts',
-                href: index().url,
-            }
-        ]
+const breadcrumbs = [
+    {
+        text: 'Shifts',
+        href: index().url,
     }
-});
+];
 const page = usePage();
 const user = computed(() => page.props.auth.user);
 const isManager = computed(() => user.value.status === 'manager');
@@ -42,9 +39,10 @@ const shiftStatusColor = (shift: Shift & { user?: User }) => {
 };
 </script>
 <template>
-    <Head title="Shifts" />
-    <h1 class="sr-only">Shifts</h1>
-    <div class="space-y-6">
+    <AppLayout :breadcrumbs="breadcrumbs">
+        <Head title="Shifts" />
+        <h1 class="sr-only">Shifts</h1>
+        <div class="space-y-6">
         <div class="flex items-center justify-between">
             <Heading variant="small" title="Shifts" :description="`You have ${shifts.length} shift${shifts.length === 1 ? '' : 's'}`"/>
             <Button as="a" v-if="isManager" :href="create().url" data-test="create-shift-button">Create shift</Button>
@@ -103,5 +101,6 @@ const shiftStatusColor = (shift: Shift & { user?: User }) => {
             <p class="text-muted-foreground">No shifts yet</p>
             <Button as="a" v-if="isManager" variant="outline" :href="create().url" class="mt-4">Create the first shift</Button>
         </div>
-    </div>
+        </div>
+    </AppLayout>
 </template>
