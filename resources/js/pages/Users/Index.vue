@@ -2,24 +2,14 @@
 import { Head, Link } from '@inertiajs/vue3';
 import Heading from '@/components/Heading.vue';
 import { Button } from '@/components/ui/button';
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from '@/components/ui/table';
+import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import { create, index, show } from '@/routes/users';
+import { create, edit, index, show } from '@/routes/users';
 import type { User } from '@/types';
-
 type Props = {
     users: User[];
 };
-
 defineProps<Props>();
-
 defineOptions({
     layout: {
         breadcrumbs: [
