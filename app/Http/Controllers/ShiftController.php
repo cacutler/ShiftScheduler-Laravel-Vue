@@ -44,8 +44,7 @@ class ShiftController extends Controller {
      * Store a newly created shift (managers only).
      * Authorization is handled inside ShiftStoreRequest::authorize().
      */
-    public function store(ShiftStoreRequest $request): RedirectResponse
-    {
+    public function store(ShiftStoreRequest $request): RedirectResponse {
         Shift::create($request->validated());
         Inertia::flash('toast', ['type' => 'success', 'message' => __('Shift created.')]);
         return to_route('shifts.index');
